@@ -1,10 +1,59 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue';
 import TheWelcome from './components/TheWelcome.vue'
+
+const listCustomer = ref([
+  {
+    id: 1,
+    name: "Họ và tên",
+    items: [
+      {
+        id: 1,
+        name: 'Lê Đoàn Anh Quân',
+      },
+      {
+        id: 2,
+        name: 'Lê Đoàn Tuấn Vũ',
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: "Ngày sinh",
+    items: [
+      {
+        id: 1,
+        name: '10/06/2000',
+      },
+      {
+        id: 2,
+        name: '10/11/2003',
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: "Giới tính",
+    items: [
+      {
+        id: 1,
+        name: 'Nam',
+      },
+      {
+        id: 2,
+        name: 'Nữ',
+      }
+    ]
+  },
+]);
+watch(listCustomer, (newRoot) => {
+  console.log(newRoot);
+}, { deep: true });
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <TheWelcome :nodes="listCustomer" />
   </main>
 </template>
 
