@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import TheWelcome from './components/TheWelcome.vue'
+import VDraggable from './components/VDraggable.vue';
+import WelcomeItem from './components/WelcomeItem.vue';
 
 const listCustomer = ref([
   {
@@ -52,8 +53,9 @@ watch(listCustomer, (newRoot) => {
 </script>
 
 <template>
-  <main>
-    <TheWelcome :nodes="listCustomer" />
+  <main class="w-full">
+    <!-- <VDraggable :nodes="listCustomer"/> -->
+    <WelcomeItem />
   </main>
 </template>
 

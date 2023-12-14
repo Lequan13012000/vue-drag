@@ -1,87 +1,101 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import draggable from "vuedraggable";
+
+const message = [
+  {
+    "name": "vue.draggable",
+    "order": 1
+  },
+  {
+    "name": "draggable",
+    "order": 2
+  },
+  {
+    "name": "component",
+    "order": 3
+  },
+  {
+    "name": "for",
+    "order": 4
+  },
+  {
+    "name": "vue.js 2.0",
+    "order": 5
+  },
+  {
+    "name": "based",
+    "order": 6
+  },
+  {
+    "name": "on",
+    "order": 7
+  },
+  {
+    "name": "Sortablejs",
+    "order": 8
+  }
+]
+
+const dragOptions = {
+  animation: 0,
+  group: "description",
+  disabled: false,
+  ghostClass: "ghost"
+};
+
+let isDragging = ref(false);
+</script>
 <template>
-  <div class="item">
-    <i>
-      <slot name="icon"></slot>
-    </i>
-    <div class="details">
-      <h3>
-        <slot name="heading"></slot>
-      </h3>
-      <slot></slot>
+  <div class="row">
+    <div class="col-6">
+      <h3>Transition</h3>
+      <draggable class="list-group" item-key="order" tag="transition-group"
+        :component-data="{ tag: 'ul', name: 'flip-list', type: 'transition' }" :list="message" v-bind="dragOptions"
+        @start="isDragging = true" @end="isDragging = false">
+        <template #item="{ element }">
+          <li class="list-group-item">
+            <i :class="element.fixed ? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'
+              " @click="element.fixed = !element.fixed" aria-hidden="true"></i>
+            {{ element.name }}
+          </li>
+        </template>
+      </draggable>
     </div>
+
+    <rawDisplayer class="col-3" :value="list" title="List" />
   </div>
 </template>
-
-<style scoped>
-.item {
-  margin-top: 2rem;
-  display: flex;
-  position: relative;
+  
+  
+<style>
+.button {
+  margin-top: 35px;
 }
 
-.details {
-  flex: 1;
-  margin-left: 1rem;
+.flip-list-move {
+  transition: transform 0.5s;
 }
 
-i {
-  display: flex;
-  place-items: center;
-  place-content: center;
-  width: 32px;
-  height: 32px;
-
-  color: var(--color-text);
+.no-move {
+  transition: transform 0s;
 }
 
-h3 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-bottom: 0.4rem;
-  color: var(--color-heading);
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
 }
 
-@media (min-width: 1024px) {
-  .item {
-    margin-top: 0;
-    padding: 0.4rem 0 1rem calc(var(--section-gap) / 2);
-  }
+.list-group {
+  min-height: 20px;
+}
 
-  i {
-    top: calc(50% - 25px);
-    left: -26px;
-    position: absolute;
-    border: 1px solid var(--color-border);
-    background: var(--color-background);
-    border-radius: 8px;
-    width: 50px;
-    height: 50px;
-  }
+.list-group-item {
+  cursor: move;
+}
 
-  .item:before {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    bottom: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:after {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    top: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:first-of-type:before {
-    display: none;
-  }
-
-  .item:last-of-type:after {
-    display: none;
-  }
+.list-group-item i {
+  cursor: pointer;
 }
 </style>
+  
